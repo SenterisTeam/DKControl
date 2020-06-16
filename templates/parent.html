@@ -11,55 +11,61 @@
 {% endblock %}
 {% block content %}
     <div class="basic-info-block block shadow" style="height: 450px">
-        <div class="header_block">
-            <p>Информация о родителе</p>
-        </div>
-        <div style="padding: 25px">
-            <h3>{{ parent }}</h3>
-            <div class="ui list">
-                <a class="item">
-                    <i class="child icon"></i>
-                    <div class="content">
-                        <div class="header">Дети</div>
-                    </div>
-                </a>
-                <div class="ui horizontal segments">
-                    {% for child in parent.childs.all %}
-                        <a class="ui segment" href="{% url 'student' child.id %}"
-                           style="text-decoration: none; color: inherit;">
-                            <p>{{ child }}</p>
-                        </a>
-                    {% endfor %}
-                </div>
-                <a class="item">
-                    <i class="venus mars icon"></i>
-                    <div class="content">
-                        <div class="header">Пол</div>
-                        <div class="description">{{ parent.gender|check }}</div>
-                    </div>
-                </a>
-                <a class="item">
-                    <i class="calendar alternate icon"></i>
-                    <div class="content">
-                        <div class="header">Дата рождения</div>
-                        <div class="description">{{ parent.birthday|check }}</div>
-                    </div>
-                </a>
-                <a class="item">
-                    <i class="phone icon"></i>
-                    <div class="content">
-                        <div class="header">Номер телефона</div>
-                        <div class="description">{{ parent.phone|check }}</div>
-                    </div>
-                </a>
-                <a class="item">
-                    <i class="building icon"></i>
-                    <div class="content">
-                        <div class="header">Адрес</div>
-                        <div class="description">{{ parent.address|check }}</div>
-                    </div>
-                </a>
+        <form method="get">
+            <div class="header_block editable">
+                <p>Информация о родителе</p>
+                <button class="ui icon basic inverted small button edit">
+                    <i class="edit icon"></i>
+                </button>
             </div>
-        </div>
+            <div style="padding: 25px">
+                <h3>{{ parent }}</h3>
+                <div class="ui list">
+                    <a class="item">
+                        <i class="child icon"></i>
+                        <div class="content">
+                            <div class="header">Дети</div>
+                        </div>
+                    </a>
+                    <div class="ui horizontal segments">
+                        {% for child in parent.childs.all %}
+                            <a class="ui segment" href="{% url 'student' child.id %}"
+                               style="text-decoration: none; color: inherit;">
+                                <p>{{ child }}</p>
+                            </a>
+                        {% endfor %}
+                    </div>
+                    <a class="item">
+                        <i class="venus mars icon"></i>
+                        <div class="content edit select" data-name="gender">
+                            <div class="header">Пол</div>
+                            <div class="description" data-options="Мужской,Женский">{{ parent.gender|check }}</div>
+                        </div>
+                    </a>
+                    <a class="item">
+                        <i class="calendar alternate icon"></i>
+                        <div class="content edit date" data-name="birthday">
+                            <div class="header">Дата рождения</div>
+                            <div class="description"
+                                 data-date="{{ parent.birthday.isoformat }}">{{ parent.birthday|check }}</div>
+                        </div>
+                    </a>
+                    <a class="item">
+                        <i class="phone icon"></i>
+                        <div class="content edit string" data-name="phone">
+                            <div class="header">Номер телефона</div>
+                            <div class="description">{{ parent.phone|check }}</div>
+                        </div>
+                    </a>
+                    <a class="item">
+                        <i class="building icon"></i>
+                        <div class="content edit string" data-name="address">
+                            <div class="header">Адрес</div>
+                            <div class="description">{{ parent.address|check }}</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </form>
     </div>
 {% endblock %}

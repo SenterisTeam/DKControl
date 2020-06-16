@@ -50,6 +50,7 @@ $(document).ready(function () {
             let description = content.children('.description')
             if (content.hasClass('string')) {
                 let value = description.text()
+                if (value === "Не указано") value = "";
                 description.html($('#string-edit-input').html());
                 description.children().children('input').val(value)
                 description.children().children('input').attr('name', content.attr('data-name'))

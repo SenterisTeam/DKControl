@@ -1,6 +1,5 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-
 from main.models import Student
 from main.views.functionsAndClasses.setModel import setModel
 

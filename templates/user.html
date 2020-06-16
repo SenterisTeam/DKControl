@@ -6,63 +6,68 @@
     <div class="ui breadcrumb" style="margin: 0 0 20px 0">
         <a class="section">Пользователи</a>
         <div class="divider"> /</div>
-        <div class="active section">{{ user.last_name }} {{ user.first_name }}</div>
+        <div class="active section">{{ user.first_name }} {{ user.last_name }}</div>
     </div>
 {% endblock %}
 {% block content %}
     <div class="basic-info-block block shadow" style="height: 510px">
-        <div class="header_block">
-            <p>Информация о пользователе</p>
-        </div>
-        <div style="padding: 25px">
-            <h3>{{ user }}</h3>
-            <div class="ui list">
-                {% if user.groups.get.name == 'Педагог' %}
-                <a class="item">
-                    <i class="building icon"></i>
-                    <div class="content">
-                        <div class="header">Объединение</div>
-                        <div class="description">{{ user.union|check }}</div>
-                    </div>
-                </a>
-                <a class="item">
-                    <i class="graduation cap icon"></i>
-                    <div class="content">
-                        <div class="header">Группы</div>
-                    </div>
-                </a>
-                <div class="ui horizontal segments">
-                    {% for group_elem in user.group_set.all %}
-                        <a class="ui segment" href="{% url 'group' group_elem.id %}"
-                           style="text-decoration: none; color: inherit;">
-                            <p>{{ group_elem }}</p>
-                        </a>
-                    {% endfor %}
-                </div>
-                {% endif %}
-                <a class="item">
-                    <i class="venus mars icon"></i>
-                    <div class="content">
-                        <div class="header">Пол</div>
-                        <div class="description">{{ user.gender|check }}</div>
-                    </div>
-                </a>
-                <a class="item">
-                   <i class="phone icon"></i>
-                    <div class="content">
-                        <div class="header">Номер телефона</div>
-                        <div class="description">{{ user.phone|check }}</div>
-                    </div>
-                </a>
-                <a class="item">
-                    <i class="building icon"></i>
-                    <div class="content">
-                        <div class="header">Адрес</div>
-                        <div class="description">{{ user.address|check }}</div>
-                    </div>
-                </a>
+        <form method="get">
+            <div class="header_block editable">
+                <p>Информация о пользователе</p>
+                <button class="ui icon basic inverted small button edit">
+                    <i class="edit icon"></i>
+                </button>
             </div>
-        </div>
+            <div style="padding: 25px">
+                <h3>{{ user }}</h3>
+                <div class="ui list">
+                    {% if user.groups.get.name == 'Педагог' %}
+                        <a class="item">
+                            <i class="building icon"></i>
+                            <div class="content">
+                                <div class="header">Объединение</div>
+                                <div class="description">{{ user.union|check }}</div>
+                            </div>
+                        </a>
+                        <a class="item">
+                            <i class="graduation cap icon"></i>
+                            <div class="content">
+                                <div class="header">Группы</div>
+                            </div>
+                        </a>
+                        <div class="ui horizontal segments">
+                            {% for group_elem in user.group_set.all %}
+                                <a class="ui segment" href="{% url 'group' group_elem.id %}"
+                                   style="text-decoration: none; color: inherit;">
+                                    <p>{{ group_elem }}</p>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <a class="item">
+                        <i class="venus mars icon"></i>
+                        <div class="content edit select" data-name="gender">
+                            <div class="header">Пол</div>
+                            <div class="description" data-options="Мужской,Женский">{{ user.gender|check }}</div>
+                        </div>
+                    </a>
+                    <a class="item">
+                        <i class="phone icon"></i>
+                        <div class="content edit string" data-name="phone">
+                            <div class="header">Номер телефона</div>
+                            <div class="description">{{ user.phone|check }}</div>
+                        </div>
+                    </a>
+                    <a class="item">
+                        <i class="building icon"></i>
+                        <div class="content edit string" data-name="address">
+                            <div class="header">Адрес</div>
+                            <div class="description">{{ user.address|check }}</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </form>
     </div>
     {% include 'snippets/chart.html' with id=1 url='/chart/attendingStats/' user_id=user.id unit="months" label='Статистика посещений' %}
 {% endblock %}
