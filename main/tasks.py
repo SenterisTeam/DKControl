@@ -1,4 +1,5 @@
 import threading
+import time
 from datetime import datetime
 import pytz
 from django.utils.timezone import now
@@ -6,7 +7,7 @@ import locale
 from DKControl import settings
 from main.models import StudySession, Group, Attending
 
-WAIT_SECONDS = 60
+WAIT_SECONDS = 1
 
 user_timezone = pytz.timezone(settings.TIME_ZONE)
 now().astimezone(user_timezone)
@@ -31,4 +32,6 @@ def session_creator():
 
                     print(f"[{datetime.now()}] New session {new_session}")
 
-    threading.Timer(WAIT_SECONDS, session_creator).start()
+    thread = threading.Timer(WAIT_SECONDS, session_creator)
+    thread.daemon = True
+    thread.start()
