@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Read config
 c = configparser.ConfigParser()
 
-c['SETTINGS'] = {"SECRET_KEY": "<Key>", "DEBUG": True, 'HOST': '*', "STATIC_URL": "<Url>"}
+c['SETTINGS'] = {"SECRET_KEY": "<Key>", "DEBUG": True, 'HOST': '*', "STATIC_URL": "<Url>", "DEPLOYMENT_TOKEN": "<Token>"}
 
 
 def save():
@@ -35,6 +35,7 @@ if not os.path.exists('settings.conf'):
     exit()
 
 c.read('settings.conf')
+save()
 
 
 # Quick-start development settings - unsuitable for production

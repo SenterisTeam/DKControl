@@ -4,10 +4,12 @@ import os
 from django.http import HttpResponseForbidden, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
+from dkcontrol import settings
+
 
 @csrf_exempt
 def deploy(request):
-    if request.headers.get('Authorization') == os.environ.get('DEPLOYMENT_TOKEN'):
+    if request.headers.get('Authorization') == settings.c.get('SETTINGS', 'DEPLOYMENT_TOKEN'):
         json_data = json.loads(request.body)
         print(f"Downloading new update ({json_data['tag']})")
 
