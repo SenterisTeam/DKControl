@@ -4,7 +4,7 @@ from datetime import datetime
 import pytz
 from django.utils.timezone import now
 import locale
-from DKControl import settings
+from dkcontrol import settings
 from main.models import StudySession, Group, Attending
 
 WAIT_SECONDS = 1
