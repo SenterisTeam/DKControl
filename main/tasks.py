@@ -28,7 +28,7 @@ def session_creator():
                     new_session = StudySession(date=datetime_begin, group=group)
                     new_session.save()
                     for student in group.students.all():
-                        new_attending = Attending(student=student, studySession=new_session)
+                        new_attending = Attending(student=student.user, studySession=new_session)
                         new_attending.save()
 
                     print(f"[{datetime.now()}] New session {new_session}")
