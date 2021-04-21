@@ -9,7 +9,7 @@ verify_ssl = true
 django-cors-middleware = "*"
 django-sass-processor = "*"
 libsass = "*"
-Django = "*"
+Django = ">=3.1.8"
 Pillow = "*"
 djangorestframework = "*"
 pyyaml = "*"
