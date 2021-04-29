@@ -109,7 +109,7 @@ class User(AbstractUser):
     theme = models.CharField("Тема оформления", max_length=64, choices=THEME_CHOICES, default=THEME_CHOICES[0][0])
 
     def save(self, *args, **kwargs):
-        if not self.id:
+        if not self.id and not self.type:
             self.type = self.base_type
 
         save = super().save(*args, **kwargs)

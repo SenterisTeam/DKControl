@@ -5,10 +5,21 @@ from rest_framework.renderers import JSONOpenAPIRenderer
 from rest_framework.routers import DefaultRouter
 from rest_framework.schemas import get_schema_view
 
-from api.views import UserView, OverviewView
+from api.views import *
 
 router = DefaultRouter()
+
 router.register(r'users', UserView, basename='User')
+router.register(r'notes', StudySessionView, basename='Note')
+router.register(r'attendings', AttendingView, basename='Attending')
+router.register(r'unions', UnionView, basename='Union')
+router.register(r'groups', GroupView, basename='Group')
+router.register(r'timetableElems', TimetableElemView, basename='TimetableElem')
+router.register(r'employeeMore', EmployeeMoreView, basename='EmployeeMore')
+router.register(r'studentsMore', StudentMoreView, basename='StudentMore')
+router.register(r'parentsMore', ParentMoreView, basename='ParentMore')
+router.register(r'logos', LogoView, basename='Logo')
+
 router.APIRootView = OverviewView
 
 urlpatterns = [
