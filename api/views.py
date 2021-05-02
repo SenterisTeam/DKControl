@@ -61,5 +61,20 @@ class LogoView(ModelViewSet):
     serializer_class = LogoSerializer
 
 
+class StudentView(ModelViewSet):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+
+class ParentView(ModelViewSet):
+    queryset = Parent.objects.all()
+    serializer_class = ParentSerializer
+
+
+class EmployeeView(ModelViewSet):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+
+
 class OverviewView(APIRootView):
     pass

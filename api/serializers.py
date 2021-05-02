@@ -4,7 +4,7 @@ from main.models import *
 
 
 class UserSerializer(serializers.ModelSerializer):
-    # password = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=True)
 
     def create(self, validated_data):
         print(validated_data['type'])
@@ -81,4 +81,28 @@ class ParentMoreSerializer(serializers.ModelSerializer):
 class LogoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Logo
+        fields = '__all__'
+
+
+class StudentSerializer(serializers.ModelSerializer):
+    more = StudentMoreSerializer()
+
+    class Meta:
+        model = Student
+        fields = '__all__'
+
+
+class ParentSerializer(serializers.ModelSerializer):
+    more = ParentMoreSerializer()
+
+    class Meta:
+        model = Parent
+        fields = '__all__'
+
+
+class EmployeeSerializer(serializers.ModelSerializer):
+    more = EmployeeMoreSerializer()
+
+    class Meta:
+        model = Employee
         fields = '__all__'

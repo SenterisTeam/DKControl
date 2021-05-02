@@ -21,7 +21,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Read config
 c = configparser.ConfigParser()
 
-c['SETTINGS'] = {"SECRET_KEY": "<Key>", "DEBUG": True, 'HOST': '*', "STATIC_URL": "<Url>", "DEPLOYMENT_TOKEN": "<Token>"}
+c['SETTINGS'] = {"SECRET_KEY": "<Key>", "DEBUG": True, 'HOST': '*', "STATIC_URL": "<Url>",
+                 "DEPLOYMENT_TOKEN": "<Token>"}
 
 
 def save():
@@ -37,7 +38,6 @@ if not os.path.exists('settings.conf'):
 c.read('settings.conf')
 save()
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -47,7 +47,7 @@ SECRET_KEY = c.get('SETTINGS', 'SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = c.getboolean('SETTINGS', 'DEBUG')
 
-ALLOWED_HOSTS = [c.get('SETTINGS', 'HOST'), '127.0.0.1']
+ALLOWED_HOSTS = [c.get('SETTINGS', 'HOST'), '127.0.0.1', 'localhost']
 
 AUTH_USER_MODEL = 'main.User'
 
@@ -80,6 +80,8 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
+CORS_ORIGIN_ALLOW_ALL = True
+
 ROOT_URLCONF = 'dkcontrol.urls'
 
 TEMPLATES = [
@@ -106,9 +108,11 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-        'api.permissions.EmployeePermission'
-    ]
+        #'rest_framework.permissions.IsAuthenticated', # TODO Client auth
+        #'api.permissions.EmployeePermission'
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 5
 }
 
 # Database

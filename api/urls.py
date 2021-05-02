@@ -19,6 +19,9 @@ router.register(r'employeeMore', EmployeeMoreView, basename='EmployeeMore')
 router.register(r'studentsMore', StudentMoreView, basename='StudentMore')
 router.register(r'parentsMore', ParentMoreView, basename='ParentMore')
 router.register(r'logos', LogoView, basename='Logo')
+router.register(r'students', StudentView, basename='Student')
+router.register(r'parents', ParentView, basename='Parent')
+router.register(r'employees', EmployeeView, basename='Employee')
 
 router.APIRootView = OverviewView
 
