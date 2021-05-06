@@ -105,11 +105,12 @@ WSGI_APPLICATION = 'dkcontrol.wsgi.application'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
-        #'rest_framework.permissions.IsAuthenticated', # TODO Client auth
-        #'api.permissions.EmployeePermission'
+        'rest_framework.permissions.IsAuthenticated',
+        'api.permissions.EmployeePermission'
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 5

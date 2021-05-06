@@ -15,6 +15,7 @@ djangorestframework = "*"
 pyyaml = "*"
 django-compressor = "*"
 uritemplate = "*"
+djangorestframework-jwt = "*"
 
 [requires]
 python_version = "3.9"

@@ -4,6 +4,7 @@ from rest_framework.renderers import JSONOpenAPIRenderer
 
 from rest_framework.routers import DefaultRouter
 from rest_framework.schemas import get_schema_view
+from rest_framework_jwt.views import obtain_jwt_token
 
 from api.views import *
 
@@ -14,10 +15,10 @@ router.register(r'notes', StudySessionView, basename='Note')
 router.register(r'attendings', AttendingView, basename='Attending')
 router.register(r'unions', UnionView, basename='Union')
 router.register(r'groups', GroupView, basename='Group')
-router.register(r'timetableElems', TimetableElemView, basename='TimetableElem')
-router.register(r'employeeMore', EmployeeMoreView, basename='EmployeeMore')
-router.register(r'studentsMore', StudentMoreView, basename='StudentMore')
-router.register(r'parentsMore', ParentMoreView, basename='ParentMore')
+router.register(r'timetable-elems', TimetableElemView, basename='TimetableElem')
+router.register(r'employee-more', EmployeeMoreView, basename='EmployeeMore')
+router.register(r'students-more', StudentMoreView, basename='StudentMore')
+router.register(r'parents-more', ParentMoreView, basename='ParentMore')
 router.register(r'logos', LogoView, basename='Logo')
 router.register(r'students', StudentView, basename='Student')
 router.register(r'parents', ParentView, basename='Parent')
@@ -38,4 +39,5 @@ urlpatterns = [
         extra_context={'schema_url': 'openapi-schema'}
     ), name='redoc'),
     path('auth/', include('rest_framework.urls')),
+    path('token-auth/', obtain_jwt_token)
 ]

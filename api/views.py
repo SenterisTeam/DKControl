@@ -1,5 +1,9 @@
 from rest_framework import permissions, serializers
+from rest_framework.decorators import action
+from rest_framework.request import Request
+from rest_framework.response import Response
 from rest_framework.routers import APIRootView
+from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet, ViewSet
 
 from main.models import *
@@ -9,6 +13,14 @@ from api.serializers import *
 class UserView(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    def retrieve(self, request: Request, *args, **kwargs):
+        """
+        If provided 'pk' is "me" then return the current user.
+        """
+        if kwargs.get('pk') == 'me':
+            return Response(self.get_serializer(request.user).data)
+        return super().retrieve(request, args, kwargs)
 
 
 class NoteView(ModelViewSet):
