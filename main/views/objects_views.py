@@ -53,7 +53,7 @@ def get_group(request, group):
     }
 
     for time in group.timetableelem_set.all():
-        timetable[time.day] = {"time": f"{time.beginTime.strftime('%H:%M')}-{time.endTime.strftime('%H:%M')}"}
+        timetable[time.day] = {"time": f"{time.begin_time.strftime('%H:%M')}-{time.end_time.strftime('%H:%M')}"}
 
     # region students attending
     if date.today().month >= 9: edit_year = 0
@@ -71,6 +71,6 @@ def get_group(request, group):
 
 def set_attending(request, attending):
     attending = Attending.objects.get(id=attending)
-    attending.isAttend = bool(request.GET.get("status"))
+    attending.is_attend = bool(request.GET.get("status"))
     attending.save()
     return JsonResponse({})

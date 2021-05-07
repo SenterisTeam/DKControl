@@ -13,8 +13,8 @@ class Note(models.Model):
 class StudySession(models.Model):  # Class Class x
     date = models.DateTimeField("Дата и время начала")
     group = models.ForeignKey("Group", verbose_name="Группа", on_delete=models.CASCADE)
-    teacherAttended = models.BooleanField("Педагог был на занятии", default=True, blank=True)
-    cancelReason = models.CharField("Причина отмены", max_length=128, null=True, blank=True, default=None)
+    teacher_attended = models.BooleanField("Педагог был на занятии", default=True, blank=True)
+    cancel_reason = models.CharField("Причина отмены", max_length=128, null=True, blank=True, default=None)
 
     def __str__(self):
         return f"{self.group.name} [{self.date.strftime('%d.%m.%Y %H:%M:%S')}]"
@@ -22,16 +22,16 @@ class StudySession(models.Model):  # Class Class x
 
 class Attending(models.Model):
     student = models.ForeignKey("Student", verbose_name="Студент", on_delete=models.CASCADE)
-    isAttend = models.BooleanField("Посетил", default=False)
-    studySession = models.ForeignKey(StudySession, verbose_name="Занятие", on_delete=models.CASCADE, related_name='attendings')
+    is_attend = models.BooleanField("Посетил", default=False)
+    study_session = models.ForeignKey(StudySession, verbose_name="Занятие", on_delete=models.CASCADE, related_name='attendings')
 
     def __str__(self):
-        return f"{self.student.last_name} -> {self.studySession.__str__()}"
+        return f"{self.student.last_name} -> {self.study_session.__str__()}"
 
 
 class Union(models.Model):
     name = models.CharField("Название", max_length=64, default="No name")
-    occupationReason = models.CharField("Причина занятости", max_length=128, null=True, blank=True, default=None)
+    occupation_reason = models.CharField("Причина занятости", max_length=128, null=True, blank=True, default=None)
 
     logo = models.ForeignKey("Logo", verbose_name="Лого", blank=True, null=True,
                              on_delete=models.SET_NULL)  # TODO Под вопросом
@@ -52,8 +52,8 @@ class Group(models.Model):
 
 
 class TimetableElem(models.Model):
-    beginTime = models.TimeField("Время начала")
-    endTime = models.TimeField("Время конца", blank=True, default="00:00:00")
+    begin_time = models.TimeField("Время начала")
+    end_time = models.TimeField("Время конца", blank=True, default="00:00:00")
 
     DAYS = (
         ('ПН', 'Понедельник'),
@@ -67,12 +67,12 @@ class TimetableElem(models.Model):
     group = models.ForeignKey("Group", verbose_name="Группа", on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
-        self.endTime = (dt.datetime.combine(dt.date(1, 1, 1), self.beginTime) + dt.timedelta(
+        self.end_time = (dt.datetime.combine(dt.date(1, 1, 1), self.begin_time) + dt.timedelta(
             minutes=100)).time()  # С костыля, ША! FullStackOverflow наше всё (работает на божей силе:b)
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.day} в {self.beginTime.strftime('%H:%M')}-{self.endTime.strftime('%H:%M')}"
+        return f"{self.day} в {self.begin_time.strftime('%H:%M')}-{self.end_time.strftime('%H:%M')}"
 
 
 class User(AbstractUser):

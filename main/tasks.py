@@ -18,13 +18,13 @@ def session_creator():
     for group in Group.objects.all():
         for timetable_elem in group.timetableelem_set.all():
             if datetime.now().strftime("%a").upper() == timetable_elem.day:
-                if timetable_elem.beginTime >= datetime.now().time():
+                if timetable_elem.begin_time >= datetime.now().time():
                     continue
                 if not [None for session in group.studysession_set.all()
-                        if session.date.strftime("%a").upper() == timetable_elem.day and session.date.date() == now().date() and session.date.time() == timetable_elem.beginTime]:
+                        if session.date.strftime("%a").upper() == timetable_elem.day and session.date.date() == now().date() and session.date.time() == timetable_elem.begin_time]:
 
                     datetime_begin = now()
-                    datetime_begin = datetime_begin.replace(hour=timetable_elem.beginTime.hour, minute=timetable_elem.beginTime.minute, second=0, microsecond=0)
+                    datetime_begin = datetime_begin.replace(hour=timetable_elem.begin_time.hour, minute=timetable_elem.begin_time.minute, second=0, microsecond=0)
                     new_session = StudySession(date=datetime_begin, group=group)
                     new_session.save()
                     for student in group.students.all():

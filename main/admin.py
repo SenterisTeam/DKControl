@@ -31,4 +31,4 @@ class CustomUserAdmin(UserAdmin):
 
 @admin.register(TimetableElem)
 class TimetableElemAdmin(admin.ModelAdmin):
-    fields = ('beginTime', 'day', 'group')
+    fields = ('begin_time', 'day', 'group')

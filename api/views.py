@@ -89,7 +89,7 @@ class SessionAttendingsView(ModelViewSet):
     serializer_class = AttendingSerializer
 
     def get_queryset(self):
-        return Attending.objects.filter(studySession=self.kwargs['session_pk'], studySession__group=self.kwargs['group_pk'])
+        return Attending.objects.filter(study_session=self.kwargs['session_pk'], study_session__group=self.kwargs['group_pk'])
 
 
 class OverviewView(APIRootView):

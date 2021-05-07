@@ -60,7 +60,7 @@
 
                     <li>Время - {{ session.date.time }}</li>
 
-                    <li>Статус - {% if session.cancelReason %}Отмененно: {{ session.cancelReason }}{% else %}
+                    <li>Статус - {% if session.cancel_reason %}Отмененно: {{ session.cancel_reason }}{% else %}
                         Проведено{% endif %}</li>
                 </ul>
             </div>

@@ -67,15 +67,15 @@ def get_attending(req, daysQuantity):
 def get_attending_stats(periodStart, periodEnd, union, group, student):
     allAttendings = [a
                      for a in Attending.objects.all()
-                     if periodStart <= a.studySession.date.date() <= periodEnd
-                     and (union is None or a.studySession.group.union.id == int(union))
-                     and (group is None or a.studySession.group.id == int(group))
+                     if periodStart <= a.study_session.date.date() <= periodEnd
+                     and (union is None or a.study_session.group.union.id == int(union))
+                     and (group is None or a.study_session.group.id == int(group))
                      and (student is None or a.student.id == int(student))
                      ]
 
     attendedAttendings = [a
                           for a in allAttendings
-                          if a.isAttend == True
+                          if a.is_attend == True
                           ]
 
     if len(allAttendings) == 0:
@@ -95,7 +95,7 @@ def get_attending_teacher_stats(periodStart, periodEnd, user):
 
     attendedAttendings = [ss
                           for ss in allAttendings
-                          if ss.teacherAttended == True
+                          if ss.teacher_attended == True
                           ]
 
     if len(allAttendings) == 0:
