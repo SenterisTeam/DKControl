@@ -23,7 +23,7 @@ class StudySession(models.Model):  # Class Class x
 class Attending(models.Model):
     student = models.ForeignKey("Student", verbose_name="Студент", on_delete=models.CASCADE)
     isAttend = models.BooleanField("Посетил", default=False)
-    studySession = models.ForeignKey(StudySession, verbose_name="Занятие", on_delete=models.CASCADE)
+    studySession = models.ForeignKey(StudySession, verbose_name="Занятие", on_delete=models.CASCADE, related_name='attendings')
 
     def __str__(self):
         return f"{self.student.last_name} -> {self.studySession.__str__()}"

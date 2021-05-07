@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.reverse import reverse
 
 from main.models import *
 
@@ -30,15 +31,17 @@ class NoteSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class StudySessionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = StudySession
-        fields = '__all__'
-
-
 class AttendingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Attending
+        fields = '__all__'
+
+
+class StudySessionSerializer(serializers.ModelSerializer):
+    attendings = AttendingSerializer(many=True)
+
+    class Meta:
+        model = StudySession
         fields = '__all__'
 
 

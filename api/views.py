@@ -28,16 +28,6 @@ class NoteView(ModelViewSet):
     serializer_class = NoteSerializer
 
 
-class StudySessionView(ModelViewSet):
-    queryset = StudySession.objects.all()
-    serializer_class = StudySessionSerializer
-
-
-class AttendingView(ModelViewSet):
-    queryset = Attending.objects.all()
-    serializer_class = AttendingSerializer
-
-
 class UnionView(ModelViewSet):
     queryset = Union.objects.all()
     serializer_class = UnionSerializer
@@ -86,6 +76,20 @@ class ParentView(ModelViewSet):
 class EmployeeView(ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
+
+
+class GroupSessionsView(ModelViewSet):
+    serializer_class = StudySessionSerializer
+
+    def get_queryset(self):
+        return StudySession.objects.filter(group=self.kwargs['group_pk'])
+
+
+class SessionAttendingsView(ModelViewSet):
+    serializer_class = AttendingSerializer
+
+    def get_queryset(self):
+        return Attending.objects.filter(studySession=self.kwargs['session_pk'], studySession__group=self.kwargs['group_pk'])
 
 
 class OverviewView(APIRootView):

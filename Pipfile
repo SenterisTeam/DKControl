@@ -16,6 +16,7 @@ pyyaml = "*"
 django-compressor = "*"
 uritemplate = "*"
 djangorestframework-jwt = "*"
+drf-nested-routers = "*"
 
 [requires]
 python_version = "3.9"
