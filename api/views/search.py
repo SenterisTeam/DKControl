@@ -89,56 +89,56 @@ class SearchView(APIView):
                                   query in s.date.strftime("%d.%m.%Y %H:%M:%S") or query in s.group.__str__()]
 
             return Response({"results": {
-                "students": {
+                **({"students": {
                     "name": "Ученики",
                     "results": [{"title": f"{s.last_name} {s.first_name} {s.patronymic}",
                                  "description": f"{', '.join([g.__str__() for g in s.groups.all()])}",
-                                 "url": f"/students/{s.id}/",
-                                 "extend": [{"name": g.__str__(), "url": f"/groups/{g.id}/"} for g in
+                                 "url": f"/students/{s.id}",
+                                 "extend": [{"name": g.__str__(), "url": f"/groups/{g.id}"} for g in
                                             s.more.groups.all()]}
                                 for s in students],
-                },
-                "teachers": {
+                }} if len(students) > 0 else {}),
+                **({"teachers": {
                     "name": "Педагоги",
                     "results": [
                         {"title": f"{s.last_name} {s.first_name} {s.patronymic}",
                          "description": f"{', '.join([g.__str__() for g in s.group_set.all()])}",
-                         "url": f"/employees/{s.id}/",
-                         "extend": [{"name": g.__str__(), "url": f"/groups/{g.id}/"} for g in s.group_set.all()]} for s
+                         "url": f"/employees/{s.id}",
+                         "extend": [{"name": g.__str__(), "url": f"/groups/{g.id}"} for g in s.group_set.all()]} for s
                         in
                         teachers]
-                },
-                "parents": {
+                }} if len(teachers) > 0 else {}),
+                **({"parents": {
                     "name": "Родители",
                     "results": [
                         {"title": f"{s.last_name} {s.first_name} {s.patronymic}",
-                         "description": f"{', '.join([c.__str__() for c in s.childs.all()])}",
-                         "url": f"/parents/{s.id}/",
-                         "extend": [{"name": c.user.__str__(), "url": f"/students/{c.user.id}/"} for c in
+                         "description": f"{', '.join([c.user.__str__() for c in s.childs.all()])}",
+                         "url": f"/parents/{s.id}",
+                         "extend": [{"name": c.user.__str__(), "url": f"/students/{c.user.id}"} for c in
                                     s.childs.all()]}
                         for s in parents]
-                },
-                "groups": {
+                }} if len(parents) > 0 else {}),
+                **({"groups": {
                     "name": "Группы",
                     "results": [
                         {"title": f"{s.name} {s.union.name}",
                          "description": f"{', '.join([t.__str__() for t in s.timetableelem_set.all()])}",
                          "url": f"/groups/{s.id}/",
-                         "extend": [{"name": g.__str__(), "url": f"/students/{g.id}/"} for g in s.students.all()]} for s
+                         "extend": [{"name": g.__str__(), "url": f"/students/{g.id}"} for g in s.students.all()]} for s
                         in
                         groups]
-                },
-                "sessions": {
+                }} if len(groups) > 0 else {}),
+                **({"sessions": {
                     "name": "Занятия",
                     "results": [
                         {"title": f"{s.group} {s.date.strftime('%d.%m.%Y %H:%M:%S')}",
                          "description": f"{s.group}",
-                         "url": f"/groups/{s.group.id}/sessions/{s.id}/",
+                         "url": f"/groups/{s.group.id}/sessions/{s.id}",
                          "extend": [{"name": s.group.__str__(), "url": f"/groups/{s.group.id}/"}]} for s in study_sessions]
-                },
-                "additions": {
+                }} if len(study_sessions) > 0 else {}),
+                **({"additions": {
                     "name": "Дополнительно",
                     "results": [
-                        {"title": f"Расширинный поиск", "description": 'Поиск с фильтрами', "url": "/search/"}]
-                },
+                        {"title": f"Расширинный поиск", "description": 'Поиск с фильтрами', "url": "/search"}]
+                }} if extend is None else {}),
             }})
